@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2011-09-21 14:54
+" 2011-09-21 15:28
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -179,11 +179,11 @@ elseif MySys() == 'windows'
     " Set helplang
     set helplang=cn
     "Fast reloading of the _vimrs
-    map <silent> <leader>ss :source ~/_vimrc<cr>
+    map <silent> <leader>sv :source ~/_gvimrc<cr>
     "Fast editing of _vimrc
-    map <silent> <leader>ee :call SwitchToBuf("~/_vimrc")<cr>
+    map <silent> <leader>ev :call SwitchToBuf("~/_gvimrc")<cr>
     "When _vimrc is edited, reload it
-    autocmd! bufwritepost _vimrc source ~/_vimrc
+    autocmd! bufwritepost _gvimrc source ~/_gvimrc
 endif
 
 " For windows version
@@ -292,6 +292,7 @@ set mousemodel=popup
 nmap <silent> <leader>q :q<cr> 
 nmap <silent> <leader>w :w<cr> 
 nmap <silent> <leader>bn :bn<cr> 
+nmap <silent> <leader>bd :bd<cr> 
 
 nmap <silent> <leader>fe :NERDTreeToggle<cr> 
 nmap <silent> <leader>tl :TlistToggle<cr> 
