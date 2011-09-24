@@ -1,12 +1,9 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2011-09-24 09:19
+" 2011-09-24 09:43
 """"""""""""""""""""""""""""""""""""""
-let mapleader=","
-let g:mapleader=","
-let g:C_MapLeader=","
-echo 'step vimrc'
+
 """"""""""""""""""""""""""""""""""""""
 " source
 """"""""""""""""""""""""""""""""""""""
@@ -106,7 +103,9 @@ set magic
 "关闭提示音
 set noerrorbells
 set novisualbell
-set vb t_vb=
+"set vb t_vb=
+"autocmd GUIEnter * set vb t_vb= 
+autocmd VimEnter * set vb t_vb= 
 "自动匹配括号
 set showmatch
 set mat=2
@@ -115,6 +114,7 @@ syntax enable
 "设置颜色主题
 set t_Co=256
 set background=dark
+"source ~/.vim/plugin/CSApprox.vim  
 colorscheme desert 
 
 """"""""""""""""""""""""""""""""""""""
@@ -190,11 +190,11 @@ elseif MySys() == 'windows'
     " Set helplang
     set helplang=cn
     "Fast reloading of the _vimrs
-    map <silent> <leader>sv :source ~/_gvimrc<cr>
+    map <silent> <leader>sv :source ~/_vimrc<cr>
     "Fast editing of _vimrc
-    map <silent> <leader>ev :call SwitchToBuf("~/_gvimrc")<cr>
+    map <silent> <leader>ev :call SwitchToBuf("~/_vimrc")<cr>
     "When _vimrc is edited, reload it
-    autocmd! bufwritepost _gvimrc source ~/_gvimrc
+    autocmd! bufwritepost _vimrc source ~/_vimrc
 endif
 
 " For windows version
@@ -302,6 +302,7 @@ set mousemodel=popup
 
 nmap <silent> <leader>q :q<cr> 
 nmap <silent> <leader>w :w<cr> 
+nmap <silent> <leader>p :set paste<cr> 
 nmap <silent> <leader>bn :bn<cr> 
 nmap <silent> <leader>bd :bd<cr> 
 
@@ -421,6 +422,21 @@ let showmarks_ignore_type = "hqm"
 " Hilight lower & upper marks
 let showmarks_hlline_lower = 1
 let showmarks_hlline_upper = 1 
+" Set hilight 
+if has('gui_running')
+	hi default ShowMarksHLl ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLu ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLo ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLm ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+else 
+	hi default ShowMarksHLl ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLu ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLo ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLm ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	" Yellow
+	"hi ShowMarksHLl ctermbg=Yellow   ctermfg=Black  guibg=#FFDB72    guifg=Black
+	"hi ShowMarksHLu ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black
+endif 
 
 """"""""""""""""""""""""""""""""""""""
 " markbrowser setting
