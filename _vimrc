@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2011-10-04 22:37
+" 2011-10-07 00:43
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -280,18 +280,18 @@ set mouse=a
 set mousemodel=popup
 
 "定义FormartSrc()
-"function! FormartSrc()
-"	exec \"w"
-"	if &filetype == 'c'
-"		exec \"!astyle --pad=oper --pad=paren-out --indent=tab --suffix=none %"
-"		exec \"e! %"
-"	endif
-"endfunc
+function! FormartSrc()
+	exec "w"
+	if &filetype == 'c'
+		exec "!astyle --pad-oper --pad-paren-out --indent=tab --suffix=none %"
+		exec "e! %"
+	endif
+endfunc
 
 """"""""""""""""""""""""""""""""""""""
 " Shortcut 快捷键
 """"""""""""""""""""""""""""""""""""""
-"map <F3> :call FormartSrc()<CR>
+map <F3> :call FormartSrc()<CR>
 
 " insert mode shortcut
 "inoremap <C-h> <Left>
