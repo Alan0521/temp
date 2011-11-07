@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2011-10-07 18:37
+" 2011-11-07 09:51
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -338,9 +338,11 @@ autocmd BufWinEnter \[Buf\ List\] setl nonumber
 """"""""""""""""""""""""""""""""""""""
 " NERDTree
 """"""""""""""""""""""""""""""""""""""
-"NERD Tree设置名称
+"NERD Tree 设置名称
 let g:NERDTree_title="[NERD Tree]" 
-"NERD Tree配置
+"NERD Tree size 
+let NERDTreeWinSize = 22
+"NERD Tree 配置
 function! NERDTree_Start()
     exec 'NERDTree'
 endfunction
