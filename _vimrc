@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2011-09-22 21:20
+" 2011-11-07 09:51
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -37,7 +37,7 @@ set fileencodings=ucs-bom,utf-8,gb18030,gb2312,gbk,cp936
 "文件类型识别
 filetype plugin indent on
 "设置shell
-set shell=bash
+"set shell=bash
 "关闭兼容模式
 set nocompatible
 "外部修改时自动读取
@@ -103,7 +103,9 @@ set magic
 "关闭提示音
 set noerrorbells
 set novisualbell
-set vb t_vb=
+"set vb t_vb=
+"autocmd GUIEnter * set vb t_vb= 
+autocmd VimEnter * set vb t_vb= 
 "自动匹配括号
 set showmatch
 set mat=2
@@ -112,6 +114,7 @@ syntax enable
 "设置颜色主题
 set t_Co=256
 set background=dark
+"source ~/.vim/plugin/CSApprox.vim  
 colorscheme desert 
 
 """"""""""""""""""""""""""""""""""""""
@@ -187,11 +190,11 @@ elseif MySys() == 'windows'
     " Set helplang
     set helplang=cn
     "Fast reloading of the _vimrs
-    map <silent> <leader>sv :source ~/_gvimrc<cr>
+    map <silent> <leader>sv :source ~/_vimrc<cr>
     "Fast editing of _vimrc
-    map <silent> <leader>ev :call SwitchToBuf("~/_gvimrc")<cr>
+    map <silent> <leader>ev :call SwitchToBuf("~/_vimrc")<cr>
     "When _vimrc is edited, reload it
-    autocmd! bufwritepost _gvimrc source ~/_gvimrc
+    autocmd! bufwritepost _vimrc source ~/_vimrc
 endif
 
 " For windows version
@@ -277,18 +280,19 @@ set mouse=a
 set mousemodel=popup
 
 "定义FormartSrc()
-"function! FormartSrc()
-"	exec \"w"
-"	if &filetype == 'c'
-"		exec \"!astyle --pad=oper --pad=paren-out --indent=tab --suffix=none %"
-"		exec \"e! %"
-"	endif
-"endfunc
+function! FormartSrc()
+	exec "w"
+	if &filetype == 'c'
+		exec "!astyle --pad-oper --pad-paren-out --indent=tab --suffix=none %"
+		exec "e! %"
+	endif
+endfunc
 
 """"""""""""""""""""""""""""""""""""""
 " Shortcut 快捷键
 """"""""""""""""""""""""""""""""""""""
 "map <F3> :call FormartSrc()<CR>
+command! Astyle call FormartSrc()
 
 " insert mode shortcut
 "inoremap <C-h> <Left>
@@ -299,6 +303,7 @@ set mousemodel=popup
 
 nmap <silent> <leader>q :q<cr> 
 nmap <silent> <leader>w :w<cr> 
+nmap <silent> <leader>p :set paste<cr> 
 nmap <silent> <leader>bn :bn<cr> 
 nmap <silent> <leader>bd :bd<cr> 
 
@@ -333,9 +338,11 @@ autocmd BufWinEnter \[Buf\ List\] setl nonumber
 """"""""""""""""""""""""""""""""""""""
 " NERDTree
 """"""""""""""""""""""""""""""""""""""
-"NERD Tree设置名称
+"NERD Tree 设置名称
 let g:NERDTree_title="[NERD Tree]" 
-"NERD Tree配置
+"NERD Tree size 
+let NERDTreeWinSize = 22
+"NERD Tree 配置
 function! NERDTree_Start()
     exec 'NERDTree'
 endfunction
@@ -418,6 +425,21 @@ let showmarks_ignore_type = "hqm"
 " Hilight lower & upper marks
 let showmarks_hlline_lower = 1
 let showmarks_hlline_upper = 1 
+" Set hilight 
+if has('gui_running')
+	hi default ShowMarksHLl ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLu ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLo ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLm ctermfg=darkblue ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+else 
+	hi default ShowMarksHLl ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLu ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLo ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	hi default ShowMarksHLm ctermfg=yellow ctermbg=blue cterm=bold guifg=blue guibg=lightblue gui=bold
+	" Yellow
+	"hi ShowMarksHLl ctermbg=Yellow   ctermfg=Black  guibg=#FFDB72    guifg=Black
+	"hi ShowMarksHLu ctermbg=Magenta  ctermfg=Black  guibg=#FFB3FF    guifg=Black
+endif 
 
 """"""""""""""""""""""""""""""""""""""
 " markbrowser setting
