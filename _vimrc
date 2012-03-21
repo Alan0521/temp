@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2012-03-06 11:27
+" 2012-03-21 09:21
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -14,11 +14,11 @@ set runtimepath+=~/.vim/extra
 
 "judge the system 
 function! MySys()
-  if has("win32")
-    return "windows"
-  else
-    return "linux"
-  endif
+	if has("win32")
+		return "windows"
+	else
+		return "linux"
+	endif
 endfunction
 
 "set the menu & the message to English
@@ -63,12 +63,12 @@ autocmd BufWritePre Makefile :%s/\s\+$//e
 
 "set gvim
 if has("gui_running")
-    set guioptions-=m " 隐藏菜单栏
-    set guioptions-=T " 隐藏工具栏
-    set guioptions-=L " 隐藏左侧滚动条
-    set guioptions-=r " 隐藏右侧滚动条
-    set guioptions-=b " 隐藏底部滚动条
-    "set showtabline=0 " 隐藏Tab栏
+	set guioptions-=m " 隐藏菜单栏
+	set guioptions-=T " 隐藏工具栏
+	set guioptions-=L " 隐藏左侧滚动条
+	set guioptions-=r " 隐藏右侧滚动条
+	set guioptions-=b " 隐藏底部滚动条
+	"set showtabline=0 " 隐藏Tab栏
 endif
 
 """"""""""""""""""""""""""""""""""""""
@@ -411,7 +411,7 @@ endfunction
 let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc' 
 
 """"""""""""""""""""""""""""""""""""""
-" lookupfile setting
+" Make setting
 """"""""""""""""""""""""""""""""""""""
 autocmd FileType c,cpp  map <buffer> <leader><space> :w<cr>:make<cr>
 nmap <leader>cn :cn<cr>
@@ -609,7 +609,23 @@ let g:acp_enableAtStartup = 0
 """"""""""""""""""""""""""""""""""""""
 " Code_complete
 """"""""""""""""""""""""""""""""""""""
-let g:completekey = "<c-j>"
+let g:completekey = "<C-j>"
+
+""""""""""""""""""""""""""""""""""""""
+" Code_complete
+""""""""""""""""""""""""""""""""""""""
+imap = <M-=>3<BS>
+imap - <M-->3<BS>
+
+""""""""""""""""""""""""""""""""""""""
+" Ctags
+""""""""""""""""""""""""""""""""""""""
+"ctags -R --c-kinds=+p --fields=+iaS --extra=+q -f ~/.tags/systags /usr/include /usr/local/include
+if MySys() == 'linux'
+	set tags+=~/.tags/systags
+elseif MySys() == 'windows'
+	set tags+=~/_tags/systags
+endif
 
 """"""""""""""""""""""""""""""""""""""
 " The end 

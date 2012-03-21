@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2011-11-09 15:23
+" 2012-03-21 09:21
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -14,11 +14,11 @@ set runtimepath+=~/.vim/extra
 
 "judge the system 
 function! MySys()
-  if has("win32")
-    return "windows"
-  else
-    return "linux"
-  endif
+	if has("win32")
+		return "windows"
+	else
+		return "linux"
+	endif
 endfunction
 
 "set the menu & the message to English
@@ -63,12 +63,12 @@ autocmd BufWritePre Makefile :%s/\s\+$//e
 
 "set gvim
 if has("gui_running")
-    set guioptions-=m " 隐藏菜单栏
-    set guioptions-=T " 隐藏工具栏
-    set guioptions-=L " 隐藏左侧滚动条
-    set guioptions-=r " 隐藏右侧滚动条
-    set guioptions-=b " 隐藏底部滚动条
-    "set showtabline=0 " 隐藏Tab栏
+	set guioptions-=m " 隐藏菜单栏
+	set guioptions-=T " 隐藏工具栏
+	set guioptions-=L " 隐藏左侧滚动条
+	set guioptions-=r " 隐藏右侧滚动条
+	set guioptions-=b " 隐藏底部滚动条
+	"set showtabline=0 " 隐藏Tab栏
 endif
 
 """"""""""""""""""""""""""""""""""""""
@@ -133,14 +133,20 @@ set linebreak
 "C风格缩进
 set cindent
 "set fold
-autocmd FileType c,cpp  setl fdm=syntax | setl fen 
+"autocmd FileType c,cpp  setl fdm=syntax | setl fen 
+autocmd FileType c,cpp  setl fdm=syntax | setl fen | setl foldlevel=100
 
 "set guifont=terminus\ 10
 if MySys() == 'linux'
 	set guifont=MONACO\ 10
 	set guifontwide=youyuan\ 10
 elseif MySys() == 'windows'
-	set guifont=MONACO:h10
+	"set guifont=MONACO:h10
+	"set guifont=consolas:h12
+	set guifont=Courier_New:h12:cANSI
+	"set guifontwide=YaHei\ Consolas\ Hybrid:h10
+	"set guifontwide=YaHei:h10
+	"set guifont=monaco:h10:cANSI
 	"set guifontwide=YouYuan:h24:cGB2312
 	"set gfw=Yahei_Mono:h15:cGB2312
 endif 
@@ -405,7 +411,7 @@ endfunction
 let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc' 
 
 """"""""""""""""""""""""""""""""""""""
-" lookupfile setting
+" Make setting
 """"""""""""""""""""""""""""""""""""""
 autocmd FileType c,cpp  map <buffer> <leader><space> :w<cr>:make<cr>
 nmap <leader>cn :cn<cr>
@@ -528,77 +534,98 @@ let g:SuperTabMappingBackward="<s-tab>"
 """"""""""""""""""""""""""""""""""""""
 " Neocomplcache
 """"""""""""""""""""""""""""""""""""""
-" Disable AutoComplPop. 
+"" Disable AutoComplPop. 
 let g:acp_enableAtStartup = 0 
-" Use neocomplcache. 
-let g:neocomplcache_enable_at_startup = 1 
-" Use smartcase. 
-let g:neocomplcache_enable_smart_case = 1 
-" Use camel case completion. 
-let g:neocomplcache_enable_camel_case_completion = 1 
-" Use underbar completion. 
-let g:neocomplcache_enable_underbar_completion = 1 
-" Set minimum syntax keyword length. 
-let g:neocomplcache_min_syntax_length = 3 
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*' 
-
-" Define dictionary. 
-let g:neocomplcache_dictionary_filetype_lists = { 
-    \ 'default' : '', 
-    \ 'vimshell' : $HOME.'/.vimshell_hist', 
-    \ 'scheme' : $HOME.'/.gosh_completions' 
-    \ } 
-
-" Define keyword. 
-if !exists('g:neocomplcache_keyword_patterns') 
-    let g:neocomplcache_keyword_patterns = {} 
-endif 
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*' 
-
-" Plugin key-mappings. 
-imap <C-k>     <Plug>(neocomplcache_snippets_expand) 
-smap <C-k>     <Plug>(neocomplcache_snippets_expand) 
-inoremap <expr><C-g>     neocomplcache#undo_completion() 
-inoremap <expr><C-l>     neocomplcache#complete_common_string() 
-
-" SuperTab like snippets behavior. 
-"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>" 
-
-" Recommended key-mappings. 
-" <CR>: close popup and save indent. 
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
-" <TAB>: completion. 
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" 
-" <C-h>, <BS>: close popup and delete backword char. 
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>" 
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>" 
-inoremap <expr><C-y>  neocomplcache#close_popup() 
-inoremap <expr><C-e>  neocomplcache#cancel_popup() 
-
-" AutoComplPop like behavior. 
-"let g:neocomplcache_enable_auto_select = 1 
-
-" Shell like behavior(not recommended). 
-"set completeopt+=longest 
-"let g:neocomplcache_enable_auto_select = 1 
-"let g:neocomplcache_disable_auto_complete = 1 
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>" 
+"" Use neocomplcache. 
+"let g:neocomplcache_enable_at_startup = 1 
+"" Use smartcase. 
+"let g:neocomplcache_enable_smart_case = 1 
+"" Use camel case completion. 
+"let g:neocomplcache_enable_camel_case_completion = 1 
+"" Use underbar completion. 
+"let g:neocomplcache_enable_underbar_completion = 1 
+"" Set minimum syntax keyword length. 
+"let g:neocomplcache_min_syntax_length = 3 
+"let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*' 
+"
+"" Define dictionary. 
+"let g:neocomplcache_dictionary_filetype_lists = { 
+"    \ 'default' : '', 
+"    \ 'vimshell' : $HOME.'/.vimshell_hist', 
+"    \ 'scheme' : $HOME.'/.gosh_completions' 
+"    \ } 
+"
+"" Define keyword. 
+"if !exists('g:neocomplcache_keyword_patterns') 
+"    let g:neocomplcache_keyword_patterns = {} 
+"endif 
+"let g:neocomplcache_keyword_patterns['default'] = '\h\w*' 
+"
+"" Plugin key-mappings. 
+"imap <C-k>     <Plug>(neocomplcache_snippets_expand) 
+"smap <C-k>     <Plug>(neocomplcache_snippets_expand) 
+"inoremap <expr><C-g>     neocomplcache#undo_completion() 
+"inoremap <expr><C-l>     neocomplcache#complete_common_string() 
+"
+"" SuperTab like snippets behavior. 
+""imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>" 
+"
+"" Recommended key-mappings. 
+"" <CR>: close popup and save indent. 
 "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
+"" <TAB>: completion. 
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>" 
+"" <C-h>, <BS>: close popup and delete backword char. 
+"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>" 
+"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>" 
+"inoremap <expr><C-y>  neocomplcache#close_popup() 
+"inoremap <expr><C-e>  neocomplcache#cancel_popup() 
+"
+"" AutoComplPop like behavior. 
+""let g:neocomplcache_enable_auto_select = 1 
+"
+"" Shell like behavior(not recommended). 
+""set completeopt+=longest 
+""let g:neocomplcache_enable_auto_select = 1 
+""let g:neocomplcache_disable_auto_complete = 1 
+""inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>" 
+""inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
+"
+"" Enable omni completion. 
+"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
+"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
+"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+"
+"" Enable heavy omni completion. 
+"if !exists('g:neocomplcache_omni_patterns') 
+"let g:neocomplcache_omni_patterns = {} 
+"endif 
+"let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
+""autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
+"let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
-" Enable omni completion. 
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+""""""""""""""""""""""""""""""""""""""
+" Code_complete
+""""""""""""""""""""""""""""""""""""""
+let g:completekey = "<C-j>"
 
-" Enable heavy omni completion. 
-if !exists('g:neocomplcache_omni_patterns') 
-let g:neocomplcache_omni_patterns = {} 
-endif 
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
-"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+""""""""""""""""""""""""""""""""""""""
+" Code_complete
+""""""""""""""""""""""""""""""""""""""
+imap = <M-=>3<BS>
+imap - <M-->3<BS>
+
+""""""""""""""""""""""""""""""""""""""
+" Ctags
+""""""""""""""""""""""""""""""""""""""
+"ctags -R --c-kinds=+p --fields=+iaS --extra=+q -f ~/.tags/systags /usr/include /usr/local/include
+if MySys() == 'linux'
+	set tags+=~/.tags/systags
+elseif MySys() == 'windows'
+	set tags+=~/_tags/systags
+endif
 
 """"""""""""""""""""""""""""""""""""""
 " The end 
