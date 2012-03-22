@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2012-03-22 21:25
+" 2012-03-22 21:34
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -103,8 +103,7 @@ set magic
 "关闭提示音
 set noerrorbells
 set novisualbell
-"set vb t_vb=
-"autocmd GUIEnter * set vb t_vb= 
+"set vb t_vb= "autocmd GUIEnter * set vb t_vb= 
 autocmd VimEnter * set vb t_vb= 
 "自动匹配括号
 set showmatch
