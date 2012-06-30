@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2012-03-21 09:21
+" 2012-06-30 18:38
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -50,7 +50,9 @@ let g:mapleader=","
 let g:C_MapLeader=","
 "switch case对齐
 set cino=:0g0t0(sus
-set textwidth=0
+"set textwidth=0
+set textwidth=80
+set cc=+1
 set wrapmargin=0
 "auto trailing whitespace
 autocmd BufWritePre *.c :%s/\s\+$//e
@@ -230,7 +232,13 @@ endif
 "autocmd BufWritePre .vimrc execute '<ESC>Go<C-R>=strftime("%c")<CR><ESC>'
 "autocmd BufWritePre .vimrc execute '/\" *The end/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
 "autocmd BufWritePre .vimrc execute "normal Gkc$\" \<C-R>=\strftime(\"%Y-%m-%d %H:%M\")\<CR>\<ESC>"
-autocmd BufWritePre *vimrc execute "normal ggjjjc$\" \<C-R>=\strftime(\"%Y-%m-%d %H:%M\")\<CR>\<ESC>"
+autocmd BufWritePre *vimrc execute "normal ggjjjc$\" \<C-R>=\strftime(\"%Y-%m-%d %H:%M\")\<CR>\<ESC>\<C-o>"
+"autocmd BufWritePre *vimrc call UpdateVimrcTime()
+
+"function! UpdateVimrcTime()
+	"execute "normal ggjjjc$\" \<C-R>=\strftime(\"%Y-%m-%d %H:%M\")\<CR>\<ESC>\<C-o>"
+	"source ~/.vimrc
+"endfunction
 
 "进行版权声明的设置
 "添加或更新头
@@ -270,7 +278,7 @@ function! TitleDet()
     while n < 10
         let line = getline(n)
         if line =~ '^\//\s*\S*Last\smodified:\S*.*$'
-            call UpdateTitle()
+           call UpdateTitle()
             return
         endif
         let n = n + 1
@@ -614,19 +622,68 @@ let g:completekey = "<C-j>"
 """"""""""""""""""""""""""""""""""""""
 " Code_complete
 """"""""""""""""""""""""""""""""""""""
-imap = <M-=>3<BS>
-imap - <M-->3<BS>
+if MySys() == 'linux'
+	if !has("gui_running")
+		imap = <M-=>3<BS>
+		imap - <M-->3<BS>
+	endif
+endif
 
 """"""""""""""""""""""""""""""""""""""
 " Ctags
 """"""""""""""""""""""""""""""""""""""
-"ctags -R --c-kinds=+p --fields=+iaS --extra=+q -f ~/.tags/systags /usr/include /usr/local/include
+"ctags -R --c++-kinds=+p --fields=+iaS --extra=+q -f ~/.tags/systags /usr/include /usr/local/include
 if MySys() == 'linux'
 	set tags+=~/.tags/systags
 elseif MySys() == 'windows'
 	set tags+=~/_tags/systags
 endif
 
+" UpdateCtags
+function! UpdateCtags()
+	!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q 
+	"!ctags -R --c++-types=+px --excmd=pattern --exclude=Makefile --exclude=.
+endfunction
+"function! UpdateCtags()
+	"let curdir=getcwd()
+	"while !filereadable("./tags")
+		"cd ..
+		"if getcwd() == "/"
+			"break
+		"endif
+	"endwhile
+	"if filewritable("./tags")
+		"!ctags -R --c++-types=+px --excmd=pattern --exclude=Makefile --exclude=.
+	"endif
+	"execute ":cd " . curdir
+"endfunction
+
+" Call Function
+command! UpdateCtags call UpdateCtags()
+
+" AutoUpdateCtags
+let g:AutoUpdateCtagsEnable = 0
+command! AutoUpdateCtagsEnable let g:AutoUpdateCtagsEnable = 1
+command! AutoUpdateCtagsDisable let g:AutoUpdateCtagsEnable = 0
+
+function! AutoUpdateCtags()
+	if g:AutoUpdateCtagsEnable == 1
+		call UpdateCtags()
+	endif
+endfunction
+
+autocmd BufWrite *.cpp,*.h,*.c call AutoUpdateCtags() 
+
+""""""""""""""""""""""""""""""""""""""
+" Indent_guides
+""""""""""""""""""""""""""""""""""""""
+let g:indent_guides_guide_size = 1
+set et
+
 """"""""""""""""""""""""""""""""""""""
 " The end 
 """"""""""""""""""""""""""""""""""""""
+
+
+
+
