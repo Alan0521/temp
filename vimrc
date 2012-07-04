@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""
 " Version: 1.0.1
 """"""""""""""""""""""""""""""""""""""
-" 2012-03-24 20:53
+" 2012-07-04 16:49
 """"""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""
@@ -50,7 +50,9 @@ let g:mapleader=","
 let g:C_MapLeader=","
 "switch case对齐
 set cino=:0g0t0(sus
-set textwidth=0
+"set textwidth=0
+set textwidth=80
+set cc=+1
 set wrapmargin=0
 "auto trailing whitespace
 autocmd BufWritePre *.c :%s/\s\+$//e
@@ -660,7 +662,7 @@ endfunction
 command! UpdateCtags call UpdateCtags()
 
 " AutoUpdateCtags
-let g:AutoUpdateCtagsEnable = 1
+let g:AutoUpdateCtagsEnable = 0
 command! AutoUpdateCtagsEnable let g:AutoUpdateCtagsEnable = 1
 command! AutoUpdateCtagsDisable let g:AutoUpdateCtagsEnable = 0
 
@@ -671,6 +673,39 @@ function! AutoUpdateCtags()
 endfunction
 
 autocmd BufWrite *.cpp,*.h,*.c call AutoUpdateCtags() 
+
+""""""""""""""""""""""""""""""""""""""
+" Cscope
+""""""""""""""""""""""""""""""""""""""
+function! Do_CsTag()
+    if(executable('cscope') && has("cscope") )
+        if MySys() == 'linux'
+            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
+        else
+            silent! execute "!dir /b *.c,*.cpp,*.h,*.java,*.cs > cscope.files"
+        endif
+        silent! execute "!cscope -bkq -i cscope.files"
+        "if filereadable("cscope.out")
+            "execute "cs add cscope.out"
+        "endif
+    endif
+endf
+
+command! UpdateCscope call Do_CsTag() 
+command! AddCscope execute "cs add cscope.out"
+
+""""""""""""""""""""""""""""""""""""""
+" Indent_guides
+""""""""""""""""""""""""""""""""""""""
+let g:indent_guides_guide_size = 1
+set et
+
+if has('gui_running')
+
+else
+    hi IndentGuidesOdd  ctermbg=black
+    hi IndentGuidesEven ctermbg=darkgrey
+endif
 
 """"""""""""""""""""""""""""""""""""""
 " The end 
